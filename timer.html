@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body {
+            background: #dddddd;
+            margin: 24px;
+        }
+
+        .timer {
+            font-family: sans-serif;
+            display: inline-block;
+            padding: 24px 32px;
+            border-radius: 30px;
+            background: white;
+        }
+
+        .timer__part {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .timer__btn {
+            width: 50px;
+            height: 50px;
+            margin-left: 16px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            background: #8208e6;
+            cursor: pointer;
+        }
+
+        .timer__btn--start {
+            background: #00b84c;
+        }
+
+        .timer__btn--stop {
+            background: #ff0256;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            margin: 10px 0;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #00b84c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer"></div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <p>Enter number of minutes:</p>
+            <input type="number" id="minutes-input" min="0" max="59">
+            <button id="set-time">Set Time</button>
+        </div>
+    </div>
+
+    <script>
+        class Timer {
+            constructor(root) {
+                root.innerHTML = Timer.getHTML();
+
+                this.el = {
+                    minutes: root.querySelector(".timer__part--minutes"),
+                    seconds: root.querySelector(".timer__part--seconds"),
+                    control: root.querySelector(".timer__btn--control"),
+                    reset: root.querySelector(".timer__btn--reset"),
+                    modal: document.getElementById("modal"),
+                    minutesInput: document.getElementById("minutes-input"),
+                    setTimeButton: document.getElementById("set-time")
+                };
+
+                this.interval = null;
+                this.remainingSeconds = 0;
+
+                this.el.control.addEventListener("click", () => {
+                    if (this.interval === null) {
+                        this.start();
+                    } else {
+                        this.stop();
+                    }
+                });
+
+                this.el.reset.addEventListener("click", () => {
+                    this.showModal();
+                });
+
+                this.el.setTimeButton.addEventListener("click", () => {
+                    this.setTime();
+                });
+            }
+
+            showModal() {
+                this.el.modal.style.display = "block";
+            }
+
+            hideModal() {
+                this.el.modal.style.display = "none";
+            }
+
+            setTime() {
+                const inputMinutes = parseInt(this.el.minutesInput.value, 10);
+
+                if (inputMinutes >= 0 && inputMinutes < 60) {
+                    this.stop();
+                    this.remainingSeconds = inputMinutes * 60;
+                    this.updateInterfaceTime();
+                    this.hideModal();
+                }
+            }
+
+            updateInterfaceTime() {
+                const minutes = Math.floor(this.remainingSeconds / 60);
+                const seconds = this.remainingSeconds % 60;
+
+                this.el.minutes.textContent = minutes.toString().padStart(2, "0");
+                this.el.seconds.textContent = seconds.toString().padStart(2, "0");
+            }
+
+            updateInterfaceControls() {
+                if (this.interval === null) {
+                    this.el.control.innerHTML = `<span class="material-icons">play_arrow</span>`;
+                    this.el.control.classList.add("timer__btn--start");
+                    this.el.control.classList.remove("timer__btn--stop");
+                } else {
+                    this.el.control.innerHTML = `<span class="material-icons">pause</span>`;
+                    this.el.control.classList.add("timer__btn--stop");
+                    this.el.control.classList.remove("timer__btn--start");
+                }
+            }
+
+            start() {
+                if (this.remainingSeconds === 0) return;
+
+                this.interval = setInterval(() => {
+                    this.remainingSeconds--;
+                    this.updateInterfaceTime();
+
+                    if (this.remainingSeconds === 0) {
+                        this.stop();
+                    }
+                }, 1000);
+
+                this.updateInterfaceControls();
+            }
+
+            stop() {
+                clearInterval(this.interval);
+
+                this.interval = null;
+
+                this.updateInterfaceControls();
+            }
+
+            static getHTML() {
+                return `
+                    <span class="timer__part timer__part--minutes">00</span>
+                    <span class="timer__part">:</span>
+                    <span class="timer__part timer__part--seconds">00</span>
+                    <button type="button" class="timer__btn timer__btn--control timer__btn--start">
+                        <span class="material-icons">play_arrow</span>
+                    </button>
+                    <button type="button" class="timer__btn timer__btn--reset">
+                        <span class="material-icons">timer</span>
+                    </button>
+                `;
+            }
+        }
+
+        new Timer(document.querySelector(".timer"));
+    </script>
+</body>
+</html>

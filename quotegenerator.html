@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #4b4b4b;
+            font-family: sans-serif;
+        }
+        #container{
+            background-color: #838383;
+            border: 5px solid #f5e4c3;
+            height: 275px;
+            width: 750px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 22px;
+        }
+        #btn{
+            margin: 50px auto;
+            height: 50px;
+            width: 250px;
+            font-size: 22px;
+            background-color: #a3a3a3;
+            border: none;
+            cursor: pointer;
+        }
+        #output{
+            margin: 25px auto;
+            padding: 10px 10px;
+            font-size: 27px;
+            background-color: #ffffff;
+            color: #b9b9b9;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <button id="btn">Press For A New Quote</button>
+        <div id="output">Press The Button To Generate A Quote!</div>
+
+    </div>
+    <script>
+        let btn = document.getElementById('btn');
+        let output = document.getElementById('output');
+
+        let quotes = [
+            "The only limit to our realization of tomorrow is our doubts of today. - Franklin D. Roosevelt",
+            "In the end, it's not the years in your life that count. It's the life in your years. - Abraham Lincoln",
+            "Life is what happens when you're busy making other plans. - John Lennon",
+            "Get busy living or get busy dying. - Stephen King",
+            "You have within you right now, everything you need to deal with whatever the world can throw at you. - Brian Tracy",
+            "Believe you can and you're halfway there. - Theodore Roosevelt",
+            "Your time is limited, so don’t waste it living someone else’s life. - Steve Jobs",
+            "The only way to do great work is to love what you do. - Steve Jobs",
+            "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success. - James Cameron",
+            "Life is 10% what happens to us and 90% how we react to it. - Charles R. Swindoll",
+            "Do not take life too seriously. You will never get out of it alive. - Elbert Hubbard",
+            "To succeed in life, you need two things: ignorance and confidence. - Mark Twain",
+            "You miss 100% of the shots you don’t take. - Wayne Gretzky",
+            "I have learned over the years that when one's mind is made up, this diminishes fear. - Rosa Parks",
+            "I alone cannot change the world, but I can cast a stone across the water to create many ripples. - Mother Teresa",
+            "What we think, we become. - Buddha",
+            "The best way to predict the future is to create it. - Peter Drucker",
+            "In the middle of difficulty lies opportunity. - Albert Einstein",
+            "Success is not how high you have climbed, but how you make a positive difference to the world. - Roy T. Bennett",
+            "The only person you are destined to become is the person you decide to be. - Ralph Waldo Emerson",
+            "Act as if what you do makes a difference. It does. - William James",
+            "Success usually comes to those who are too busy to be looking for it. - Henry David Thoreau",
+            "Opportunities don't happen. You create them. - Chris Grosser",
+            "Don't be afraid to give up the good to go for the great. - John D. Rockefeller",
+            "I find that the harder I work, the more luck I seem to have. - Thomas Jefferson",
+            "Success is not in what you have, but who you are. - Bo Bennett",
+            "The road to success and the road to failure are almost exactly the same. - Colin R. Davis",
+            "Success seems to be connected with action. Successful people keep moving. They make mistakes, but they don't quit. - Conrad Hilton",
+            "If you really look closely, most overnight successes took a long time. - Steve Jobs",
+            "The way to get started is to quit talking and begin doing. - Walt Disney",
+            "Don't let yesterday take up too much of today. - Will Rogers",
+            "You learn more from failure than from success. Don’t let it stop you. Failure builds character. - Unknown",
+            "If you are working on something that you really care about, you don’t have to be pushed. The vision pulls you. - Steve Jobs",
+            "Experience is a hard teacher because she gives the test first, the lesson afterwards. - Vernon Sanders Law",
+            "To know how much there is to know is the beginning of learning to live. - Dorothy West",
+            "Goal setting is the secret to a compelling future. - Tony Robbins",
+            "People who are crazy enough to think they can change the world, are the ones who do. - Rob Siltanen",
+            "Failure will never overtake me if my determination to succeed is strong enough. - Og Mandino",
+            "Entrepreneurs are great at dealing with uncertainty and also very good at minimizing risk. That's the classic entrepreneur. - Mohnish Pabrai",
+            "We may encounter many defeats but we must not be defeated. - Maya Angelou",
+            "Knowing is not enough; we must apply. Wishing is not enough; we must do. - Johann Wolfgang Von Goethe",
+            "Imagine your life is perfect in every respect; what would it look like? - Brian Tracy",
+            "We generate fears while we sit. We overcome them by action. - Dr. Henry Link",
+            "Whether you think you can or think you can’t, you’re right. - Henry Ford",
+            "Security is mostly a superstition. Life is either a daring adventure or nothing. - Helen Keller",
+            "The man who has confidence in himself gains the confidence of others. - Hasidic Proverb",
+            "The only way to achieve the impossible is to believe it is possible. - Charles Kingsleigh",
+            "The only place where success comes before work is in the dictionary. - Vidal Sassoon"
+        ];
+
+        btn.addEventListener('click', function() {
+            var randomquote = quotes[Math.floor(Math.random() * quotes.length)];
+            output.innerHTML = randomquote;
+        });
+    </script>
+</body>
+</html>
